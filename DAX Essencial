@@ -118,3 +118,21 @@ CALCULATE(
 )
 
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                                        ANÁLISE DE VARIEDADE DE PRODUTOS VENDIDOS
+
+Positivação = DISTINCTCOUNT(fVendas[cdProduto])
+
+
+Positivação PM = 
+CALCULATE(
+    [Positivação],
+    DATEADD(dCalendario[Data], -1, MONTH)
+)
+
+
+% Positivação MoM = DIVIDE([Positivação] - [Positivação PM], [Positivação PM])
+
+
+
+
