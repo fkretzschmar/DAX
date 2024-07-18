@@ -1,1 +1,49 @@
 Qtd Média Itens = AVERAGE(fVendas[QtdItens])
+
+
+Notas Emitidas = DISTINCTCOUNT(fVendas[NFe])
+
+
+Faturamento = SUMX(fVendas,fVendas[QtdItens] * fVendas[ValorUnitario])
+
+
+Qtd Linhas Vendas = COUNTROWS(fVendas)
+
+
+Ticket Médio = [Faturamento] / [Notas Emitidas]
+
+
+Faturamento 2018 = CALCULATE([Faturamento], dCalendario[Ano] = 2018)
+
+
+Fat Alimentos 2018 = 
+CALCULATE(
+    [Faturamento],
+    dCalendario[Ano] = 2018,
+    fVendas[Linha Produto] = "Alimentos"
+)
+
+
+% Fat 2018 = DIVIDE([Faturamento 2018] , [Faturamento])
+
+
+- - - - - - - - - - - - -  - - - - - - - - - - - - - - - - - -
+*% do total por cada vendedor(Pode ser feito para faturamento também)
+
+Faturamento = SUMX(fVendas,fVendas[QtdItens] * fVendas[ValorUnitario])
+Notas Emitidas = DISTINCTCOUNT(fVendas[NFe])
+
+
+ALL Notas Emitidas = 
+CALCULATE(
+    [Notas Emitidas],
+    ALLSELECTED(fVendas)
+)
+
+DEPOIS
+
+% Notas = DIVIDE([Notas Emitidas],[Total Notas Emitidas])
+
+- - - - - - -- - - - -- - - - - - - - - - - - - - - - - - - - - - - -
+
+
