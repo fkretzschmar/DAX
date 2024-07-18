@@ -46,4 +46,29 @@ DEPOIS
 
 - - - - - - -- - - - -- - - - - - - - - - - - - - - - - - - - - - - -
 
+Faturamento Vendedores > 1M = 
+CALCULATE(
+    [Faturamento],
+    FILTER(
+        dVendedor,
+        [Faturamento] > 1000000
+    )
+)
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+*Calculando valores, com OU entre COLUNAS DE DUAS TABELAS DIFERENTES
+
+Fat OU = 
+CALCULATE(
+    [Faturamento],
+    FILTER(
+        SUMMARIZE(
+            fVendas,
+            dCalendario[Ano],
+            dVendedor[Vendedor]
+        ),
+        dCalendario[Ano] = 2018 || dVendedor[Vendedor] = "Carla Ferreira"
+))
+
+
 
