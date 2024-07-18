@@ -28,8 +28,9 @@ CALCULATE(
 
 
 - - - - - - - - - - - - -  - - - - - - - - - - - - - - - - - -
-*% do total por cada vendedor(Pode ser feito para faturamento também)
+*% do total por cada vendedor(Pode ser feito para faturamento e Qtd Itens também)                     %
 
+Qtd Itens Vendidos = SUM(fVendas[QtdItens])
 Faturamento = SUMX(fVendas,fVendas[QtdItens] * fVendas[ValorUnitario])
 Notas Emitidas = DISTINCTCOUNT(fVendas[NFe])
 
@@ -42,10 +43,10 @@ CALCULATE(
 
 DEPOIS
 
-% Notas = DIVIDE([Notas Emitidas],[Total Notas Emitidas])
+% Notas = DIVIDE([Qtd Notas Emitidas],[ALL Notas Emitidas])
 
 - - - - - - -- - - - -- - - - - - - - - - - - - - - - - - - - - - - -
-
+                                                                     FILTER
 Faturamento Vendedores > 1M = 
 CALCULATE(
     [Faturamento],
@@ -70,5 +71,50 @@ CALCULATE(
         dCalendario[Ano] = 2018 || dVendedor[Vendedor] = "Carla Ferreira"
 ))
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+                                                                 BATIMENTO COM MÊS ANTERIOR
+
+Faturamento Mês Anterior = 
+CALCULATE(
+    [Faturamento],
+    DATEADD(dCalendario[Data], -1, MONTH)
+)
+
+
+% Faturamento MoM = DIVIDE([Faturamento] - [Faturamento Mês Anterior], [Faturamento Mês Anterior])
+
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                                       FATURAMENTO ANO ANTERIOR 2 MANEIRAS
+
+Faturamento PY = 
+CALCULATE(
+    [Faturamento],
+    //DATEADD(dCalendario[Data], -1, YEAR)
+    SAMEPERIODLASTYEAR(dCalendario[Data])
+)
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -      
+                                                                                 SEMANA ANTERIOR
+
+Faturamento Semana Ant = 
+CALCULATE(
+    [Faturamento],
+    FILTER(
+        ALL(dCalendario),
+        dCalendario[Semana] = SELECTEDVALUE(dCalendario[Semana]) -1
+        ),
+        VALUES(dCalendario[Ano]
+        )
+)
+
+
+- - - - - - - - - - - - - - - - - - - - --- -- - - - - - - - - - - - - - - - - -
+                                                                        FATURAMENTO ACUMULANDO MÊS A MÊS
+
+Faturamento YTD = 
+CALCULATE(
+    [Faturamento],
+    DATESYTD(dCalendario[Data])
+)
 
 
