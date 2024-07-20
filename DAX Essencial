@@ -180,6 +180,14 @@ Possui Vendas? = dCalendario[Data] <= MAX(fVendas[Data Venda])
 *Retorne para (Exibição de Relatório) selecione a Matriz ou Tabela,
 vá em FILTROS>Filtros neste visual jogue a coluna (Possui Vendas?) e selecione True
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+
+
+
+
+
+
 
 
 
