@@ -169,6 +169,16 @@ RETURN
 ProjecaoAno
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+                                                                          COMPARAÇÃO DE PERIODOS INCOMPLETOS ANO ATUAL X ANTERIOR
+
+*Em (Modelo de Exibição de Tabela) na tabela dCalendario crie uma nova coluna:
+
+Possui Vendas? = dCalendario[Data] <= MAX(fVendas[Data Venda])
+
+*vai retornar TRUE ou FALSE
+
+*Retorne para (Exibição de Relatório) selecione a Matriz ou Tabela,
+vá em FILTROS>Filtros neste visual jogue a coluna (Possui Vendas?) e selecione True
 
 
 
