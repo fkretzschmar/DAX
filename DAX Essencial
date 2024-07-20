@@ -166,7 +166,7 @@ SUMX(
     [Churn] * (MesContexto - MesIteracao + 1)
 )
 RETURN
-PorjecaoAno
+ProjecaoAno
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
