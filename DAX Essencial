@@ -72,6 +72,14 @@ CALCULATE(
     )
 )
 
+*Filtrar e extrair de uma matriz apenas valores que desejo
+
+Fat France =
+CALCULATE)
+    [Faturamento],
+    KEEPFILTERS(dCliente[Pais] = "France")
+)
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 *Calculando valores, com OU entre COLUNAS DE DUAS TABELAS DIFERENTES
 
