@@ -149,6 +149,29 @@ CALCULATE(
 % Positivação MoM = DIVIDE([Positivação] - [Positivação PM], [Positivação PM])
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+                                                                                PERDA ACUMULADA DE CONTRATO MÊS ATÉ FIM DO ANO
+[Churn] = coluna com os valores dos contratos que foi perdido
+PERDA ACUMULADA DE CONTRATO MÊS, LEVANDO EM CONTA SE PERDER O CONTRATO EM 
+perdeu um contrato de R$50 em JAN
+perdeu um contrato de R$70 em FEV
+ESSE VALOR DEVE SER DESCONTADO MÊS A MÊS ATÉ O FIM DO ANO
+
+Churn MRR YTD v2 = 
+VAR MesContexto = MAX(dCalendario[Mês])
+VAR ProjecaoAno =
+SUMX(
+    DATESYTD(dCalendario[data]),
+    VAR MesIteracao = CALCULATE(MAX(dCalendario[Mês]))
+    RETURN
+    [Churn] * (MesContexto - MesIteracao + 1)
+)
+RETURN
+PorjecaoAno
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
 
 
 
