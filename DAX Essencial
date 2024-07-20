@@ -34,8 +34,24 @@ Qtd Itens Vendidos = SUM(fVendas[QtdItens])
 Faturamento = SUMX(fVendas,fVendas[QtdItens] * fVendas[ValorUnitario])
 Notas Emitidas = DISTINCTCOUNT(fVendas[NFe])
 
+ALL Notas Emitidas =                 //Para porcentagem total
+CALCULATE(
+    [Notas Emitidas],
+    ALL(fVendas)
+)
 
-ALL Notas Emitidas = 
+OU
+
+ALL Notas Emitidas Subcategoria =     //Para porcentagem entre subcategorias
+CALCULATE(
+    [Notas Emitidas],
+    ALL(fVendas),
+    VALUES(fVendas[Subcategoria])
+)
+
+OU
+
+ALL Notas Emitidas =              //Esse é bom para brincar com filtros de fora
 CALCULATE(
     [Notas Emitidas],
     ALLSELECTED(fVendas)
