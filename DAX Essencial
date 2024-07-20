@@ -109,7 +109,7 @@ CALCULATE(
 
 
 - - - - - - - - - - - - - - - - - - - - --- -- - - - - - - - - - - - - - - - - -
-                                                                        FATURAMENTO ACUMULANDO MÊS A MÊS
+                                                                        FATURAMENTO ACUMULANDO MÊS A MÊS E ZERANDO AO FIM DO ANO
 
 Faturamento YTD = 
 CALCULATE(
@@ -117,6 +117,21 @@ CALCULATE(
     DATESYTD(dCalendario[Data])
 )
 
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+                                                                            FATURAMENTO ACUMULADO MÊS A MÊS SEGUINDO OUTROS ANOS
+Total Vendas Acumulado =
+VAR vUltimoDiaContexto = MAX (dCalendario[Data])
+VAR vAcumulado =
+CALCULATE(
+    [Faturamento],
+    FILTER(
+        ALL(dCalendario),
+        dCalendario[Data] <= vUltimoDiaContexto
+    )
+)
+RETURN
+vAcumulado
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
                                                                         ANÁLISE DE VARIEDADE DE PRODUTOS VENDIDOS
@@ -133,6 +148,7 @@ CALCULATE(
 
 % Positivação MoM = DIVIDE([Positivação] - [Positivação PM], [Positivação PM])
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 
