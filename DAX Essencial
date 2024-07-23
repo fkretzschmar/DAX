@@ -157,6 +157,33 @@ CALCULATE(
 RETURN
 vAcumulado
 
+OU
+
+Fat Acc Mes Passado v2 = 
+VAR vDataContexto = MIN(Data[DataID])
+RETURN
+CALCULATE(
+    [Faturamento],
+    FILTER(
+            ALL(Data),                         //Data = nome tabela
+            Data[DataId] < vDataContexto       //DataId = Nome da coluna data
+)
+
+OU
+
+*Vá até a tabela Calendario e crie uma coluna
+Contador Mes = (Data[Ano] - 2017)*12 + Data[MesNum]
+
+
+Fat Acc Mes Passado v3 = 
+VAR vMesAtual = MAX(Data[Contador Mes])
+RETURN
+CALCULATE(
+    [Faturamento],
+    ALL(Data),
+    Data[Contador Mes] <= vMesAtual - 1
+)
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
                                                                         ANÁLISE DE VARIEDADE DE PRODUTOS VENDIDOS
 
@@ -205,9 +232,34 @@ Possui Vendas? = dCalendario[Data] <= MAX(fVendas[Data Venda])
 vá em FILTROS>Filtros neste visual jogue a coluna (Possui Vendas?) e selecione True
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                                                    RANK
+
+Rank Categoria = 
+RANKX(
+    ALL(Cliente[Categoria]),
+    [Faturamento]
+)
 
 
 
+Rank entre duas colunas da mesma tabela = 
+RANKX(
+    ALL(Cliente[Categoria], Cliente[Rede]),
+    [Faturamento]
+)
+
+
+Rank entre duas colunas de tabelas diferentes = 
+RANKX(
+    CROSSJOIN(
+        ALL(Cliente[Categoria]),
+        ALL(Produto[Grupo])
+    ),
+    [Faturamento]
+)
+
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 
