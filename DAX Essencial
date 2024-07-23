@@ -260,6 +260,26 @@ RANKX(
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+                                                                                    DOLAR DIA ANTERIOR
+Dolar Dia Anterior Correto = 
+VAR vDataAtual = SELECTEDVALUE(dCalendario[ID Data])
+VAR vDiaAnterior = 
+CALCULATE(
+    MAX('Cotação'[Data Cotação]),
+    FILTER(
+        ALLSELECTED(dCalendario),
+        dCalendario[ID Data] < vDataAtual
+    )
+)
+VAR vDolarAnt = 
+CALCULATE(
+    [Dolar],
+    dCalendario[ID Data] = vDiaAnterior
+)
+RETURN
+vDolarAnt
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 
