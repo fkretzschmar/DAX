@@ -280,6 +280,38 @@ RETURN
 vDolarAnt
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+                                                                                    VALOR DO ULTIMO PEDIDO
+//Dados= nome da tabela
+
+Ultimo Valor = 
+VAR vDataAtual = SELECTEDVALUE(Dados[Data])
+VAR vProdutoAtual = SELECTEDVALUE(Dados[produto])
+VAR vUltimaData =
+    CALCULATE(
+        MAX(Dados[Data]),
+        FILTER(
+            ALL(Dados),
+            Dados[Data] < vDataAtual &&
+            Dados[produto] = vProdutoAtual
+        )
+    )
+VAR UltimoCusto =
+    CALCULATE(
+        SUM(Dados[custo total]),
+        FILTER(
+            ALL(Dados),
+            Dados[Data] = vUltimaData &&
+            Dados[produto] = vProdutoAtual
+        )
+    )
+RETURN 
+    UltimoCusto
+
+
+total = SUM(Dados[custo total])
+% mudança = DIVIDE([Ultimo Valor] - [total], [total])
+
+
 
 
 
