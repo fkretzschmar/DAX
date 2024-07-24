@@ -326,12 +326,51 @@ vMedia
 total = SUM(Dados[custo total])
 % mudança = DIVIDE([Ultimo Valor] - [total], [total])
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+                                                                   PRODUTO MAIS VENDIDO
+TOPN(
+    1, VALUES(Vendas[Produto]), 
+CALCULATE(
+    SUM(Vendas[Quantidade])
+    )
+)
 
 
 
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -- - - - - - -
+Como as funções ALL e ALLSELECTED diferem no DAX?
+R:ALL remove todos os filtros do contexto atual, Enquanto ALLSELECTED mantém os filtros aplicados fora da consulta.
+
+*Para que servem as funções iteradoras, como SUMX, no DAX?
+R: Executar cálculos linha a linha e depois agregar esses resultados.
 
 
+*Para calcular o total acumulado de vendas no ano até a data atual, qual medida DAX é apropriada?
+CALCULATE(SUM(Vendas[Valor]),DATESYTD(Calendario[Data]))
+
+
+*O total acumulado de vendas até a data mais recente no contexto do visual
+Total acumulado =
+CALCULATE
+    (SUM(Vendas[Valor]),
+    FILTER(ALL(Calendario),
+    Calendario[Data] <= MAX(Calendario[Data])
+    )
+)
+
+
+*% A eficácia do investimento em termos de geração de lucro comparado ao custo
+Medida DAX = DIVIDE(
+    SUM(Vendas[Lucro]) - SUM(Despesas[Custo]), 
+    SUM(Despesas[Custo]) 
+)
+
+*Para calcular o custo médio de aquisição de clientes (CAC) em um período, qual medida DAX é correta?
+DIVIDE
+    (SUM(Marketing[Custo Total]), 
+    DISTINCTCOUNT(Clientes[ID Cliente])
+)
 
 
 
