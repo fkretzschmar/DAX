@@ -308,6 +308,21 @@ RETURN
     UltimoCusto
 
 
+Media Ultimas Compras =
+VAR vDataAtual = SELECTEDVALUE(Dados[Data])
+VAR vProdutoAtual = SELECTEDVALUE(Dados[produto])
+VAR vMedia =
+CALCULATE(
+    AVARAGE(Dados[Custo Total]),
+    ALL(Dados),
+    Dados[data] < vDataAtual,
+    Dados[produto] = vProdutoAtual
+)
+RETURN
+vMedia
+
+
+
 total = SUM(Dados[custo total])
 % mudança = DIVIDE([Ultimo Valor] - [total], [total])
 
