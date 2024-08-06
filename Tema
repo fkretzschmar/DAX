@@ -1,0 +1,39 @@
+tema.json
+
+*TEMA RH
+
+{"name":"Tema - RH","textClasses":{"label":{"fontFace":"wf_standard-font, helvetica, arial, sans-serif"},
+"title":{"color":"#003289","fontSize":11}},"dataColors":["#01565B","#5ABA8A","#E1F296","#6B007B","#E044A7",
+"#744EC2","#D9B300","#D64550","#3599B8","#DFBFBF","#4AC5BB","#5F6B6D","#FB8281","#F4D25A","#7F898A","#A4DDEE","#FDAB89",
+"#B687AC","#28738A","#A78F8F","#168980","#293537","#BB4A4A","#B59525","#475052","#6A9FB0","#BD7150","#7B4F71","#1B4D5C",
+"#706060","#0F5C55","#1C2325"],"visualStyles":{"*":{"*":{"background":[{"transparency":100}]}},"page":{"*":{"background":
+[{"color":{"solid":{"color":"#FFFFFF"}},"transparency":100}]}}}}
+
+
+*TEMA FINANCEIRO
+
+{"name":"LK","dataColors":["#4D67F3","#BC65E0","#2A0D4F","#EC6C33","#F2F2F2","#FFFFFF","#FFFFFF",
+"#414343"],"background":"#FFFFFF","foreground":"#EEEBF3","tableAccent":"#DB1183","textClasses":
+{"label":{"fontFace":"wf_standard-font, helvetica, arial, sans-serif","color":"#2F1053"},
+"callout":{"fontFace":"'Segoe UI Bold', wf_segoe-ui_bold, helvetica, arial, sans-serif","fontSize":20},
+"title":{"color":"#2A0D4F","fontSize":10}},"visualStyles":{"*":{"*":{"background":
+[{"transparency":100}],"visualHeader":[{"transparency":100}]}},"page":{"*":{"background":
+[{"color":{"solid":{"color":"#FFFFFF"}},"transparency":0}]}}},"backgroundLight":
+"#B5AEB9","foregroundNeutralSecondary":"#5B5073"}
+
+*TEMA VENDAS
+
+{"name":"Tema Vendas","dataColors":
+["#6B12B9","#5554FE","#14ACFF","#141618","#1C2025","#262D35","#B1FFA0","#FF9292",
+"#3599B8","#DFBFBF","#4AC5BB","#5F6B6D","#FB8281","#F4D25A","#7F898A","#A4DDEE",
+"#FDAB89","#B687AC","#28738A","#A78F8F","#168980","#293537","#BB4A4A","#B59525",
+"#475052","#6A9FB0","#BD7150","#7B4F71","#1B4D5C","#706060","#0F5C55","#1C2325"],
+"textClasses":{"callout":{"color":"#FFFFFF","fontFace":
+"'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
+"fontSize":18},"title":{"fontFace":
+"'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
+"fontSize":10},"label":{"color":"#000000","fontFace":
+"'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif"}},
+"foreground":"#8B8B8B","foregroundNeutralSecondary":"#E6E6E6","visualStyles":
+{"*":{"*":{"background":[{"transparency":100}]}},"page":{"*":{"background":
+[{"color":{"solid":{"color":"#FFFFFF"}},"transparency":100}]}}}}
