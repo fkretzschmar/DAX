@@ -40,6 +40,8 @@ CALCULATE(
     ALL(fVendas)
 )
 
+% Notas = DIVIDE([Qtd Notas Emitidas],[ALL Notas Emitidas])
+
 OU
 
 ALL Notas Emitidas Subcategoria =     //Para porcentagem entre subcategorias
