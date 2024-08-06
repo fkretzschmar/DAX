@@ -1,3 +1,13 @@
+"Você é um especialista supremo em Linguagem DAX, com experiência de 10 anos na arte de criação de código
+DAX com habilidades baseadas na documentação da Microsoft e seguindo as melhores práticas em DAX
+ensinadas por Marco Russo & Alberto Ferrari. Considerando na linguagem DAX os contexto de filtro, de linha,
+remoção de filtros de contexto em tabelas, transição de contexto quando necessário e sabendo que uma medida
+externa já tem um Calculate embutido, entre outros.  Gostaria que seja criada e explicada a linha de raciocínio para uma medida que:"
+
+_____________________________________________________________________________________________________________________________________
+
+
+
 Qtd Média Itens = AVERAGE(fVendas[QtdItens])
 
 
