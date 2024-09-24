@@ -1,0 +1,140 @@
+1.	Crie as seguintes medidas básicas:
+
+		a.	[Número de vendas]: contagem de vendas distintas;
+Número de vendas = DISTINCTCOUNT(fVendas[IdVenda])
+
+		b.	[Volume vendido]: total da quantidade vendida;
+Volume vendido = SUM(fVendas[QtdVenda])
+
+		c.	[Preço médio de venda]: valor médio dos preços unitários;
+Preço médio de venda = 
+DIVIDE(
+    SUMX(fVendas, fVendas[PrecoUnitario] * fVendas[QtdVenda]),
+    [Volume vendido],
+    0
+)
+
+		d. [Vendas brutas]: total do valor vendido (quantidade x preço unitário);
+Vendas brutas = SUMX(fVendas, fVendas[PrecoUnitario] * fVendas[QtdVenda])
+
+		e.	[Vendas líquidas]: vendas brutas sem os descontos;
+Vendas líquidas = 
+[Vendas brutas] 
+- SUM(fVendas[VlrDevolucao]) 
+- SUM(fVendas[VlrDesconto])
+
+		f.	[Lucro bruto]: vendas líquidas sem os custos;
+Lucro bruto = 
+[Vendas líquidas] 
+- SUMX(fVendas, fVendas[CustoUnitario] * fVendas[QtdVenda])
+
+		g. [Média de vendas brutas diárias]: valor, em média, de vendas brutas por dia. Devem ser contabilizados apenas os dias em que houveram vendas.
+Média de vendas brutas diárias = 
+DIVIDE(
+    [Vendas brutas],
+    COUNTROWS(
+        FILTER(
+            dCalendario,
+            CALCULATE(SUM(fVendas[QtdVenda])) > 0
+        )
+    )
+)
+
+
+	2.	Utilize os recursos de time intelligence do DAX para chegar aos cálculos abaixo:
+
+		a.	[Vendas brutas LY]: vendas brutas do ano anterior;
+
+		b.	[Vendas brutas LY Exato]: vendas brutas do mesmo período no ano anterior, 
+onde somam-se os valores do ano anterior apenas até a maior data de dados existentes do período atual.
+Exemplo: se a maior data de dados é 20/06/2022, deve-se somar o LY até 20/06/2021.
+
+		c.	[Vendas brutas LM]: vendas brutas do mês anterior;
+Vendas brutas LY = 
+CALCULATE(
+    [Vendas brutas],
+    SAMEPERIODLASTYEAR(dCalendario[Data])
+)
+
+		d.	[Vendas brutas YTD]: vendas brutas acumuladas partindo do primeiro dia do ano até a data (mês ou dia) selecionada;
+Vendas brutas YTD = 
+TOTALYTD(
+    [Vendas brutas],
+    dCalendario[Data]
+)
+
+		Bônus: Crie as medidas acima utilizando calculation group. E crie um parâmetro de campos, para selecionar a medida que deseja visualizar os cálculos de time intelligence.
+
+
+
+	3.	Crie as seguintes medidas avançadas:
+
+		a. [Valor estoque atual]: total do valor em estoque atual. Obs. a tabela fInventario grava uma foto semanal da posição do estoque,
+portanto o estoque atual é referente a maior semana selecionada;
+Valor estoque atual = 
+VAR MaxDataInventario = CALCULATE(
+    MAX(fInventario[Data]),
+    REMOVEFILTERS(fInventario)
+)
+RETURN
+SUMX(
+    FILTER(fInventario, fInventario[Data] = MaxDataInventario),
+    fInventario[QtdDisponivel] * fInventario[PrecoUnitario]
+)
+
+		b.	[Valor médio estoque atual]: valor médio em estoque atual por range de aging. Obs. O aging do estoque está na coluna fInventario[DiasEmEstoque];
+Valor médio estoque atual = 
+VAR MaxDataInventario = CALCULATE(
+    MAX(fInventario[Data]),
+    REMOVEFILTERS(fInventario)
+)
+RETURN
+AVERAGEX(
+    FILTER(fInventario, fInventario[Data] = MaxDataInventario),
+    fInventario[QtdDisponivel] * fInventario[PrecoUnitario]
+)
+
+		c. [Vendas brutas na data de abertura]: total do valor vendido (quantidade x preço unitário), referente a data de abertura de cada loja;
+Vendas brutas na data de abertura = 
+CALCULATE(
+    SUMX(
+        fVendas, 
+        fVendas[QtdVenda] * fVendas[PrecoUnitario]
+    ),
+    FILTER(
+        fVendas,
+        fVendas[Data] = LOOKUPVALUE(dLojas[DataAbertura], dLojas[IdLoja], fVendas[IdLoja])
+    )
+)
+
+		d.	[Vendas brutas dos produtos em estoque a 91 a 120 dias]: total do valor vendido (quantidade x preço unitário)
+dos produtos que têm saldo em estoque atual com aging entre 91 a 120 dias;	
+Vendas brutas dos produtos em estoque a 91 a 120 dias = 
+VAR ProdutosAging = 
+    CALCULATETABLE(
+        VALUES(fInventario[IdProduto]),
+        fInventario[QtdDiasEmEstoque] >= 91,
+        fInventario[QtdDiasEmEstoque] <= 120,
+        REMOVEFILTERS(fInventario)
+    )
+RETURN
+CALCULATE(
+    SUMX(
+        fVendas, 
+        fVendas[QtdVenda] * fVendas[PrecoUnitario]
+    ),
+    fVendas[IdProduto] IN ProdutosAging
+)
+
+		e.	[% Share valor estoque atual Agrupavel]: calcular o % share por Tipo de Loja e Categoria sempre totalizando
+100% no nível selecionado (use a coluna dLojas[TipoLoja] agregando dProdutoCategoria[NomeCategoria] numa matriz (Tipo de Loja > Categoria);
+% Share valor estoque atual Agrupavel = 
+VAR TotalEstoque = 
+    CALCULATE(
+        [Valor estoque atual], 
+        REMOVEFILTERS(dLojas), 
+        REMOVEFILTERS(dProdutoCategoria)
+    )
+RETURN
+    DIVIDE([Valor estoque atual], TotalEstoque, 0)
+
